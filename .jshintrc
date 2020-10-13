@@ -1,0 +1,13 @@
+{
+	"esversion": 8,
+	"strict": "implied",
+	"devel": true,
+	"browser": true,
+	"indent": 1,
+	"undef": true,
+	"unused": false,
+	"globals": {
+		"$": false,
+		"Mousetrap": false
+	}
+}

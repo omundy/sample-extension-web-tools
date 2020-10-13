@@ -1,0 +1,49 @@
+{
+	"manifest_version": 2,
+
+	"name": "Open Github.io link from blob",
+	"short_name": "Open Github.io link from blob",
+	"description": "Open Github.io link from blob",
+	"version": "0.1",
+	"author": "Owen Mundy",
+
+	"icons": {
+		"16": "assets/img/icon_16x16.png",
+		"48": "assets/img/icon_48x48.png",
+		"128": "assets/img/icon_128x128.png"
+	},
+	"background": {
+		"scripts": [
+			"assets/js/background.js"
+		]
+	},
+	"content_scripts": [{
+		"matches": ["<all_urls>"],
+		"js": [
+			"assets/libs/mousetrap.min.js",
+			"assets/js/content.js"
+		],
+		"css": [
+			"assets/css/styles.css"
+		],
+		"run_at": "document_end"
+	}],
+	"permissions": [
+
+
+		"https://*.github.com/*",
+		"https://*.github.io/*",
+
+		"activeTab",
+		"storage",
+		"management"
+	],
+	"web_accessible_resources": [
+		"*.svg", "*.png",
+		"*.jpg", "*.JPG",
+		"*.gif", "*.GIF",
+		"/assets/*"
+	],
+	"content_security_policy": "script-src 'self'; object-src 'self';"
+
+}
