@@ -21,6 +21,9 @@ Mousetrap.bind('ctrl+g', function() {
 
 });
 
+/**
+ *	Return a URL converted from github.com > github.io
+ */
 function returnCleanGithubIO(loc){
 	// loc = "https://github.com/omundy/dig245-critical-web-design/blob/master/demos/javascript/0-hello-console-variables/0-lamp.html";
 
@@ -52,12 +55,15 @@ function returnCleanGithubIO(loc){
 	return url;
 }
 
+/**
+ *	Return a URL converted from github.io > github.com
+ */
 function returnCleanGithubCOM(loc){
 
 	// loc = "https://omundy.github.io/dig245-critical-web-design/demos/javascript/0-hello-console-variables/0-lamp.html";
 
 	if (!loc) return;
-	if (DEBUG) console.log(loc);
+	// if (DEBUG) console.log(loc);
 
 	// clean loc
 	var cleanLoc = loc.replace('https://', '');
@@ -80,7 +86,11 @@ function returnCleanGithubCOM(loc){
 	if (DEBUG) console.log(path);
 
 	// final url
-	var url = "https://github.com/" + username + "/" + repo + "/blob/master" + path;
+	var url = "https://github.com/" + username + "/" + repo;
+	// if not root
+	if (path != "/")
+		url += "/blob/master" + path;
+
 	if (!url) return;
 	if (DEBUG) console.log(url);
 

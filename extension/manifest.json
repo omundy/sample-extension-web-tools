@@ -4,7 +4,7 @@
 	"name": "Open Github.io link from blob",
 	"short_name": "Open Github.io link from blob",
 	"description": "Open Github.io link from blob",
-	"version": "0.1",
+	"version": "0.2",
 	"author": "Owen Mundy",
 
 	"icons": {
