@@ -1,0 +1,51 @@
+
+html, body { background: #c8b9cc; margin: 0; padding: 0; box-sizing: border-box; }
+
+.container {
+    width: 200px; height: 50px;
+}
+
+.content { padding: 15px; }
+a:link, a:active, a:visited { color: #2a82b4; text-decoration: none;}
+a:hover {color: #4e8eb9; text-decoration: underline;}
+h1, h2, h3, h4, h5, h6 { color: #d32cf1; }
+.lite { color: #999; }
+.center-vertical { display: flex; justify-content: center; align-items: center; }
+
+
+
+
+/* BUTTONS
+-------------------------------------------------- */
+
+.btn, .btn:link, .btn:visited, input[type="button"] {
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    outline:none;
+    cursor: pointer;
+    margin: 5px;
+    box-shadow: 2px 2px #196995;
+    padding: 5px 6px;
+    background-color: #2a82b4;
+    color: #a8aec7 !important;
+    text-decoration: none !important;
+}
+.btn:hover, .btn:active, .btn:focus { background: #4e8eb9; border: none; text-shadow: 0; text-decoration: none !important; }
+
+
+.closeBtn {
+    background: #9cc;
+    padding: 5px 9px;
+    border: none;
+    outline:none;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+.closeBtn:hover {
+    background: #ddd;
+    cursor: pointer;
+}
+.fab { font-size: 200%; }

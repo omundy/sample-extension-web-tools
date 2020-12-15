@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="UTF-8">
+	<title>Popup</title>
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
+	<link rel="stylesheet" type="text/css" href="./popup.css">
+</head>
+
+<body>
+
+	<div class="container">
+
+		<div class="header">
+			<button id="closeBtn" class="closeBtn"> X </button>
+			<div id="status"></div>
+		</div>
+
+		<div class="content">
+
+			<h3>
+				<img src="../assets/img/icon_16x16.png" alt="">
+				<a href="https://github.com/omundy/sample-extension-github-tools" target="_blank">Github Tools</a>
+			</h3>
+
+			<p>
+				Press CTL + g while <a href="https://www.sitepoint.com/when-do-elements-take-the-focus/">focused</a> on Github .com or .io page to view in the alternate.
+			</p>
+
+			<a href="https://github.com/omundy/sample-extension-github-tools" target="_blank">
+				<i class="fas fa-external-link-alt"></i> Github.com
+			</a>
+
+
+
+
+		</div><!-- content -->
+
+	</div><!-- container -->
+
+	<script src="../assets/libs/jquery-3.2.1.min.js"></script>
+	<script src="../assets/libs/mousetrap.min.js"></script>
+	<script src="../assets/js/content.js"></script>
+	<script src="./popup.js"></script>
+</body>
+
+</html>

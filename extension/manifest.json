@@ -1,16 +1,24 @@
 {
 	"manifest_version": 2,
-
-	"name": "Open Github.io link from blob",
-	"short_name": "Open Github.io link from blob",
-	"description": "Open Github.io link from blob",
-	"version": "0.2",
+	"name": "Github tools",
+	"short_name": "Github tools",
+	"description": "Open Github.io link from blob, and vice versa",
+	"version": "0.1",
 	"author": "Owen Mundy",
-
 	"icons": {
 		"16": "assets/img/icon_16x16.png",
 		"48": "assets/img/icon_48x48.png",
 		"128": "assets/img/icon_128x128.png"
+	},
+
+	"browser_action": {
+		"default_icon": {
+			"16": "assets/img/icon_16x16.png",
+			"48": "assets/img/icon_48x48.png",
+			"128": "assets/img/icon_128x128.png"
+		},
+		"default_title": "Github tools",
+		"default_popup": "pages/popup.html"
 	},
 	"background": {
 		"scripts": [
@@ -28,12 +36,10 @@
 		],
 		"run_at": "document_end"
 	}],
+
 	"permissions": [
-
-
 		"https://*.github.com/*",
 		"https://*.github.io/*",
-
 		"activeTab",
 		"storage",
 		"management"
@@ -45,5 +51,4 @@
 		"/assets/*"
 	],
 	"content_security_policy": "script-src 'self'; object-src 'self';"
-
 }
