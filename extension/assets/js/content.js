@@ -38,7 +38,7 @@ function returnCleanGithubIO(loc) {
 	try {
 		console.log("🤣 returnCleanGithubIO() loc =", loc);
 
-		// test
+		// tests
 		// loc = "https://github.com/omundy/dig245-critical-web-design/blob/master/demos/javascript/0-hello-console-variables/0-lamp.html";
 
 		if (!loc) return;
@@ -86,7 +86,8 @@ function returnCleanGithubCOM(loc) {
 	try {
 		console.log("😛 returnCleanGithubCOM() loc =", loc);
 
-		// test
+		// tests
+		// loc = "https://omundy.github.io/dig245-critical-web-design/";
 		// loc = "https://omundy.github.io/dig245-critical-web-design/demos/javascript/0-hello-console-variables/0-lamp.html";
 
 		if (!loc) return;
@@ -115,7 +116,7 @@ function returnCleanGithubCOM(loc) {
 		// final url
 		var url = "https://github.com/" + username + "/" + repo;
 		// if not root
-		if (filepath != "/" || filepath != "/index.html")
+		if (filepath != "" && filepath != "/" && filepath != "/index.html")
 			url += "/blob/master" + filepath;
 
 		if (!url) return;
