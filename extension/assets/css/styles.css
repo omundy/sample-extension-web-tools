@@ -4,7 +4,7 @@
 	right: 20px;
 	bottom: 20px;
 	width: 40px;
-	height:40px;
+	height: 40px;
 	background-color: orange;
 	border: none;
 	color: white;
@@ -12,4 +12,13 @@
 	text-decoration: none;
 	font-size: 26px;
 	border-radius: 50%;
+}
+
+/*
+change github tab sizes from 8 🙄 to 4 
+https://github.com/isaacs/github/issues/170
+*/
+pre {
+	-moz-tab-size: 4;
+	tab-size: 4;
 }
