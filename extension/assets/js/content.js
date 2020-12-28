@@ -2,8 +2,8 @@
  *	Content script
  */
 
-// turn on debugging 
-let DEBUG = false;
+// turn on debugging
+let DEBUG = true;
 
 Mousetrap.bind('ctrl+g', launchGithub);
 
@@ -60,7 +60,12 @@ function returnCleanGithubIO(loc) {
 		if (DEBUG) console.log("🤣 returnCleanGithubIO() repo =", repo);
 
 		// filepath
-		var filepath = cleanLoc.split("/blob/master")[1];
+		var filepath = cleanLoc
+							.split("/blob/master")
+							.join("^")
+							.split("/blob/main")
+							.join("^")
+							.split("^")[1];
 		if (!filepath) {
 			// if we get this far we know we're on Github.com, but in a repo directory
 			filepath = "/index.html";
