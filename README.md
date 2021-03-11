@@ -1,4 +1,4 @@
-# Sample Extension - 👂 Listener
+# Sample Extension - 👍 Github tools
 
 Open a github.io link from a blob and vice versa
 
