@@ -12,7 +12,7 @@ Mousetrap.bind('ctrl+g', launchGithub);
  */
 function launchGithub() {
 	try {
-		// console.log("launchGithub()");
+		console.log("launchGithub()");
 
 		var url;
 
@@ -36,7 +36,7 @@ function launchGithub() {
  */
 function returnCleanGithubIO(loc) {
 	try {
-		console.log("🤣 returnCleanGithubIO() loc =", loc);
+		console.log("👍 returnCleanGithubIO() loc =", loc);
 
 		// tests
 		// loc = "https://github.com/omundy/dig245-critical-web-design/blob/master/demos/javascript/0-hello-console-variables/0-lamp.html";
@@ -47,17 +47,17 @@ function returnCleanGithubIO(loc) {
 		// clean loc
 		var cleanLoc = loc.replace('https://github.com/', '');
 		if (!cleanLoc) return;
-		if (DEBUG) console.log("🤣 returnCleanGithubIO() cleanLoc =", cleanLoc);
+		if (DEBUG) console.log("👍 returnCleanGithubIO() cleanLoc =", cleanLoc);
 
 		// username
 		var username = cleanLoc.split("/")[0];
 		if (!username) return;
-		if (DEBUG) console.log("🤣 returnCleanGithubIO() username =", username);
+		if (DEBUG) console.log("👍 returnCleanGithubIO() username =", username);
 
 		// repo name
 		var repo = cleanLoc.split("/")[1];
 		if (!repo) return;
-		if (DEBUG) console.log("🤣 returnCleanGithubIO() repo =", repo);
+		if (DEBUG) console.log("👍 returnCleanGithubIO() repo =", repo);
 
 		// filepath
 		var filepath = cleanLoc
@@ -70,17 +70,17 @@ function returnCleanGithubIO(loc) {
 			// if we get this far we know we're on Github.com, but in a repo directory
 			filepath = "/index.html";
 		}
-		if (DEBUG) console.log("🤣 returnCleanGithubIO() filepath =", filepath);
+		if (DEBUG) console.log("👍 returnCleanGithubIO() filepath =", filepath);
 
 		// final url
 		var url = "https://" + username + ".github.io/" + repo + filepath;
 		if (!url) return;
-		if (DEBUG) console.log("🤣 returnCleanGithubIO() url =", url);
+		if (DEBUG) console.log("👍 returnCleanGithubIO() url =", url);
 
 		return url;
 
 	} catch (err) {
-		console.error("🤣 returnCleanGithubIO() err =", err);
+		console.error("👍 returnCleanGithubIO() err =", err);
 	}
 }
 
@@ -89,7 +89,7 @@ function returnCleanGithubIO(loc) {
  */
 function returnCleanGithubCOM(loc) {
 	try {
-		console.log("😛 returnCleanGithubCOM() loc =", loc);
+		console.log("👍 returnCleanGithubCOM() loc =", loc);
 
 		// tests
 		// loc = "https://omundy.github.io/dig245-critical-web-design/";
@@ -101,22 +101,22 @@ function returnCleanGithubCOM(loc) {
 		// clean loc
 		var cleanLoc = loc.replace('https://', '');
 		if (!cleanLoc) return;
-		if (DEBUG) console.log("😛 returnCleanGithubCOM() cleanLoc =", cleanLoc);
+		if (DEBUG) console.log("👍 returnCleanGithubCOM() cleanLoc =", cleanLoc);
 
 		// username
 		var username = cleanLoc.split(".github.io/")[0];
 		if (!username) return;
-		if (DEBUG) console.log("😛 returnCleanGithubCOM() username =", username);
+		if (DEBUG) console.log("👍 returnCleanGithubCOM() username =", username);
 
 		// repo name
 		var repo = cleanLoc.split("/")[1];
 		if (!repo) return;
-		if (DEBUG) console.log("😛 returnCleanGithubCOM() repo =", repo);
+		if (DEBUG) console.log("👍 returnCleanGithubCOM() repo =", repo);
 
 		// filepath
 		var filepath = cleanLoc.split(repo)[1];
 		if (!filepath) return;
-		if (DEBUG) console.log("😛 returnCleanGithubCOM() filepath =", filepath);
+		if (DEBUG) console.log("👍 returnCleanGithubCOM() filepath =", filepath);
 
 		// final url
 		var url = "https://github.com/" + username + "/" + repo;
@@ -125,10 +125,29 @@ function returnCleanGithubCOM(loc) {
 			url += "/blob/master" + filepath;
 
 		if (!url) return;
-		if (DEBUG) console.log("😛 returnCleanGithubCOM() url =", url);
+		if (DEBUG) console.log("👍 returnCleanGithubCOM() url =", url);
 
 		return url;
 	} catch (err) {
-		console.error("😛 returnCleanGithubCOM() err =", err);
+		console.error("👍 returnCleanGithubCOM() err =", err);
 	}
 }
+
+
+
+
+/**
+ *	Add a button to test
+ */
+(function() {
+
+	// create button string and append it to page
+	let btn = "<button class='githubToolsButtonOnPage'>👍</button>";
+	document.body.insertAdjacentHTML('beforeend', btn);
+
+	// add button listener
+	document.querySelector(".githubToolsButtonOnPage").addEventListener('click', () => {
+		launchGithub();
+	}, false);
+
+})();

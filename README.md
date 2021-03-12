@@ -1,6 +1,6 @@
-# Sample Extension - 👍 Github tools
+# Sample Extension - 👍 Github Tools
 
-Open a github.io link from a blob and vice versa
+Opens github.io (Github Pages) link from blob, and vice versa from github.com
 
 ### Demonstrates
 

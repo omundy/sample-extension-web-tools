@@ -1,8 +1,9 @@
 {
 	"manifest_version": 2,
-	"name": "Sample Extension - 👍 Github tools",
-	"short_name": "👍 Github tools",
-	"description": "Opens Github.io link from blob, and vice versa",
+
+	"name": "Sample Extension - 👍 Github Tools",
+	"short_name": "👍 Github Tools",
+	"description": "Opens github.io (Github Pages) link from blob, and vice versa from github.com",
 	"version": "0.1",
 	"author": "Owen Mundy",
 	"icons": {
