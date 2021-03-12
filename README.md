@@ -2,11 +2,12 @@
 
 Opens github.io (Github Pages) link from blob, and vice versa from github.com
 
+
 ### Demonstrates
 
 - Use of [mousetrap.js](https://github.com/ccampbell/mousetrap)
 - How to style an extension popup (a.k.a. "browser_action")
-- Several JS string parsing techniques
+- Several Javascript string parsing techniques
 
 
 ### Info
