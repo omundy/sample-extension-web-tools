@@ -139,15 +139,15 @@ function returnCleanGithubCOM(loc) {
 /**
  *	Add a button to test
  */
-(function() {
-
-	// create button string and append it to page
-	let btn = "<button class='githubToolsButtonOnPage'>👍</button>";
-	document.body.insertAdjacentHTML('beforeend', btn);
-
-	// add button listener
-	document.querySelector(".githubToolsButtonOnPage").addEventListener('click', () => {
-		launchGithub();
-	}, false);
-
-})();
+// (function() {
+//
+// 	// create button string and append it to page
+// 	let btn = "<button class='githubToolsButtonOnPage'>👍</button>";
+// 	document.body.insertAdjacentHTML('beforeend', btn);
+//
+// 	// add button listener
+// 	document.querySelector(".githubToolsButtonOnPage").addEventListener('click', () => {
+// 		launchGithub();
+// 	}, false);
+//
+// })();

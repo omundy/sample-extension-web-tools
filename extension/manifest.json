@@ -1,5 +1,5 @@
 {
-	"manifest_version": 2,
+	"manifest_version": 3,
 
 	"name": "Sample Extension - 👍 Github Tools",
 	"short_name": "👍 Github Tools",
@@ -13,7 +13,7 @@
 		"128": "assets/img/icon-128x128.png"
 	},
 
-	"browser_action": {
+	"action": {
 		"default_icon": {
 			"16": "assets/img/icon-16x16.png",
 			"32": "assets/img/icon-32x32.png",
@@ -23,11 +23,11 @@
 		"default_title": "Github tools",
 		"default_popup": "pages/popup.html"
 	},
+
 	"background": {
-		"scripts": [
-			"assets/js/background.js"
-		]
+		"service_worker": "assets/js/background.js"
 	},
+
 	"content_scripts": [{
 		"matches": ["<all_urls>"],
 		"js": [
@@ -41,17 +41,28 @@
 	}],
 
 	"permissions": [
-		"https://*.github.com/*",
-		"https://*.github.io/*",
-		"activeTab",
-		"storage",
-		"management"
+		"activeTab"
 	],
+
 	"web_accessible_resources": [
 		"*.svg", "*.png",
 		"*.jpg", "*.JPG",
 		"*.gif", "*.GIF",
 		"/assets/*"
 	],
-	"content_security_policy": "script-src 'self'; object-src 'self';"
+
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+
+	"web_accessible_resources": [{
+		"resources": [
+			"*.svg", "*.png", "*.jpg", "*.JPG", "*.gif", "*.GIF",
+			"/assets/*"
+		],
+		"matches": ["https://*.github.com/*",
+			"https://*.github.io/*"
+		]
+	}]
+
 }
