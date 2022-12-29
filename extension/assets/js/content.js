@@ -5,7 +5,30 @@
 // turn on debugging
 let DEBUG = true;
 
-Mousetrap.bind('ctrl+g', launchGithub);
+
+(async () => {
+
+	moodleFixes();
+
+	Mousetrap.bind('ctrl+g', launchGithub);
+
+})();
+
+
+function moodleFixes(){
+	// only on moodle...
+	if (!window.location.href.includes('moodle')) return;
+
+	// 1. uncheck "notify student" checkbox
+	let notifyStudentCheckbox = document.querySelector('[name="sendstudentnotifications"]');
+	// console.log(notifyStudentCheckbox, notifyStudentCheckbox.checked);
+	if (notifyStudentCheckbox && notifyStudentCheckbox.checked){
+		notifyStudentCheckbox.checked = false;
+	}
+
+}
+
+
 
 /**
  *	Launch a Github.com or Github.io page
