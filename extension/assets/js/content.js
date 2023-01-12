@@ -15,16 +15,40 @@ let DEBUG = true;
 })();
 
 
-function moodleFixes(){
+function setFieldState(type, id, state){
+	let field = document.querySelector(id);
+	if (!field) return;
+	// console.log(field);
+	// console.log("field.type =", field.type);
+	// console.log("field.checked =", field.checked);
+	// console.log("field.value =", field.value);
+	if (field && field.type == "checkbox") {
+		// console.log("checkbox", field.type, field, field.checked);
+		field.checked = state;
+	}
+	else if (field && field.type == "select-one") {
+		// console.log("select", field.type, field, field.value);
+		field.value = state;
+	}
+}
+
+
+function moodleFixes() {
 	// only on moodle...
 	if (!window.location.href.includes('moodle')) return;
 
-	// 1. uncheck "notify student" checkbox
-	let notifyStudentCheckbox = document.querySelector('[name="sendstudentnotifications"]');
-	// console.log(notifyStudentCheckbox, notifyStudentCheckbox.checked);
-	if (notifyStudentCheckbox && notifyStudentCheckbox.checked){
-		notifyStudentCheckbox.checked = false;
-	}
+	// "notify student" checkbox and select
+	setFieldState("checkbox",'#id_sendstudentnotifications', false);
+	setFieldState("select-one", '#id_sendstudentnotifications', "0");
+	// uncheck dates on assignments
+	setFieldState("checkbox",'#id_allowsubmissionsfromdate_enabled', false);
+	setFieldState("checkbox",'#id_duedate_enabled', false);
+	setFieldState("checkbox",'#id_cutoffdate_enabled', false);
+	setFieldState("checkbox",'#id_gradingduedate_enabled', false);
+
+	// check "online text" submission
+	setFieldState("checkbox",'#id_assignsubmission_onlinetext_enabled', true);
+
 
 }
 
@@ -84,11 +108,11 @@ function returnCleanGithubIO(loc) {
 
 		// filepath
 		var filepath = cleanLoc
-							.split("/blob/master")
-							.join("^")
-							.split("/blob/main")
-							.join("^")
-							.split("^")[1];
+			.split("/blob/master")
+			.join("^")
+			.split("/blob/main")
+			.join("^")
+			.split("^")[1];
 		if (!filepath) {
 			// if we get this far we know we're on Github.com, but in a repo directory
 			filepath = "/index.html";
