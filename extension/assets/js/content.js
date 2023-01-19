@@ -49,7 +49,7 @@ function moodleFixes() {
 	// check "online text" submission
 	setFieldState("checkbox",'#id_assignsubmission_onlinetext_enabled', true);
 
-
+	console.log("👍 Moodle Fixes done");
 }
 
 
