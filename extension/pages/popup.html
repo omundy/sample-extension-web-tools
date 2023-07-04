@@ -2,47 +2,46 @@
 <html>
 
 <head>
-	<meta charset="UTF-8">
-	<title>Popup</title>
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.9/css/all.css">
-	<link rel="stylesheet" type="text/css" href="./popup.css">
+    <meta charset="UTF-8">
+    <title>Popup</title>
+    <link rel="stylesheet" type="text/css" href="./popup.css">
 </head>
 
 <body>
 
-	<div class="container">
+    <div class="container">
 
-		<div class="header">
-			<button id="closeBtn" class="closeBtn"> X </button>
-			<div id="status"></div>
-		</div>
+        <div class="header">
+            <button id="closeBtn" class="closeBtn"> X </button>
+            <div id="status"></div>
+        </div>
 
-		<div class="content">
+        <div class="content">
 
-			<h3>
-				<img src="../assets/img/icon-16x16.png" alt="">
-				<a href="https://github.com/omundy/sample-extension-github-tools" target="_blank">Github Tools</a>
-			</h3>
+            <h3>
+                <img src="../assets/img/icon-16x16.png" alt="">
+                <a href="https://github.com/omundy/sample-extension-web-tools" target="_blank">Web Tools</a>
+            </h3>
 
-			<p>
-				Press CTL + g while <a href="https://www.sitepoint.com/when-do-elements-take-the-focus/">focused</a> on Github .com or .io page to view in the alternate.
-			</p>
+            <p>
+                Press CTL + g while <a href="https://www.sitepoint.com/when-do-elements-take-the-focus/" target="_blank">focused</a> on Github .com or .io page to view in the alternate.
+            </p>
 
-			<a href="https://github.com/omundy/sample-extension-github-tools" target="_blank">
-				<i class="fas fa-external-link-alt"></i> Github.com
-			</a>
+            <p>
+                <a href="https://github.com/omundy/sample-extension-web-tools" target="_blank">
+                    <i class="fas fa-external-link-alt"></i> Github.com
+                </a>
+            </p>
 
+            <p>
+                <a id="optionsBtn" class="optionsBtn" href="#"> Options </a>
+            </p>
 
+        </div><!-- content -->
 
+    </div><!-- container -->
 
-		</div><!-- content -->
-
-	</div><!-- container -->
-
-	<script src="../assets/libs/jquery-3.2.1.min.js"></script>
-	<script src="../assets/libs/mousetrap.min.js"></script>
-	<script src="../assets/js/content.js"></script>
-	<script src="./popup.js"></script>
+    <script src="./popup.js"></script>
 </body>
 
 </html>

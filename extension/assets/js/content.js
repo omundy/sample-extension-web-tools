@@ -4,18 +4,67 @@
 
 // turn on debugging
 let DEBUG = true;
-
+let breakpoints = true;
 
 (async () => {
+	// these only run on their respective sites
 
-	moodleFixes();
+	const data = await chrome.storage.sync.get("showBreakpoints", (res) => {
+		console.log(res);
+		breakpoints = res.showBreakpoints || false;
+		bootstrapHelper();
+	});
 
-	Mousetrap.bind('ctrl+g', launchGithub);
+	moodleHelper();
 
+	githubHelper();
 })();
 
+/**
+ *	Bootstrap Helper - Mainly breakpoints
+ */
+function bootstrapHelper() {
+	if (!breakpoints) return;
+	// also used here https://codepen.io/owenmundy/pen/oNLZpWM?editors=1100
+	let breakpoint = `
+    <div style="position: fixed; top: 0; right: 0; font-size: .9rem;">
+    <code style="background-color: #eee; display: inline-block; padding: 0px 2px; border-radius: 4px; color: #577590ff;">
+        <a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/" target="_blank">Breakpoint</a>:
+        <span class="d-none">Always hidden</span>
+        <span class="d-sm-none">xs <576px </span>
+            <span class="d-none d-sm-inline d-md-none">sm ≥576px</span>
+            <span class="d-none d-md-inline d-lg-none">md ≥768px</span>
+            <span class="d-none d-lg-inline d-xl-none">lg ≥992px</span>
+            <span class="d-none d-xl-inline d-xxl-none">xl ≥1200px</span>
+            <span class="d-none d-xxl-inline">xxl ≥1400px</span>
+    </code>
+    </div>`;
+	document.body.insertAdjacentHTML("beforeend", breakpoint);
+}
 
-function setFieldState(type, id, state){
+/**
+ *	Moodle Helper - Updates annoying Moodle settings
+ */
+function moodleHelper() {
+	// only on moodle...
+	if (!window.location.href.includes("moodle")) return;
+
+	// "notify student" checkbox and select
+	setFieldState("checkbox", "#id_sendstudentnotifications", false);
+	setFieldState("select-one", "#id_sendstudentnotifications", "0");
+	// uncheck dates on assignments
+	setFieldState("checkbox", "#id_allowsubmissionsfromdate_enabled", false);
+	setFieldState("checkbox", "#id_duedate_enabled", false);
+	setFieldState("checkbox", "#id_cutoffdate_enabled", false);
+	setFieldState("checkbox", "#id_gradingduedate_enabled", false);
+
+	// check "online text" submission
+	setFieldState("checkbox", "#id_assignsubmission_onlinetext_enabled", true);
+
+	console.log("👍 Moodle Helper done");
+}
+
+function setFieldState(type, id, state) {
 	let field = document.querySelector(id);
 	if (!field) return;
 	// console.log(field);
@@ -25,34 +74,15 @@ function setFieldState(type, id, state){
 	if (field && field.type == "checkbox") {
 		// console.log("checkbox", field.type, field, field.checked);
 		field.checked = state;
-	}
-	else if (field && field.type == "select-one") {
+	} else if (field && field.type == "select-one") {
 		// console.log("select", field.type, field, field.value);
 		field.value = state;
 	}
 }
 
-
-function moodleFixes() {
-	// only on moodle...
-	if (!window.location.href.includes('moodle')) return;
-
-	// "notify student" checkbox and select
-	setFieldState("checkbox",'#id_sendstudentnotifications', false);
-	setFieldState("select-one", '#id_sendstudentnotifications', "0");
-	// uncheck dates on assignments
-	setFieldState("checkbox",'#id_allowsubmissionsfromdate_enabled', false);
-	setFieldState("checkbox",'#id_duedate_enabled', false);
-	setFieldState("checkbox",'#id_cutoffdate_enabled', false);
-	setFieldState("checkbox",'#id_gradingduedate_enabled', false);
-
-	// check "online text" submission
-	setFieldState("checkbox",'#id_assignsubmission_onlinetext_enabled', true);
-
-	console.log("👍 Moodle Fixes done");
+function githubHelper() {
+	Mousetrap.bind("ctrl+g", launchGithub);
 }
-
-
 
 /**
  *	Launch a Github.com or Github.io page
@@ -63,16 +93,15 @@ function launchGithub() {
 
 		var url;
 
-		if (window.location.href.includes('github.com')) {
+		if (window.location.href.includes("github.com")) {
 			url = returnCleanGithubIO(window.location.href);
-		} else if (window.location.href.includes('github.io')) {
+		} else if (window.location.href.includes("github.io")) {
 			url = returnCleanGithubCOM(window.location.href);
 		}
+		if (!url) return;
 
 		// open if url returned
-		if (!url) return;
 		var html = window.open(url, "this page on github.io / github.com");
-
 	} catch (err) {
 		console.error(err);
 	}
@@ -92,7 +121,7 @@ function returnCleanGithubIO(loc) {
 		// console.log(loc);
 
 		// clean loc
-		var cleanLoc = loc.replace('https://github.com/', '');
+		var cleanLoc = loc.replace("https://github.com/", "");
 		if (!cleanLoc) return;
 		if (DEBUG) console.log("👍 returnCleanGithubIO() cleanLoc =", cleanLoc);
 
@@ -125,7 +154,6 @@ function returnCleanGithubIO(loc) {
 		if (DEBUG) console.log("👍 returnCleanGithubIO() url =", url);
 
 		return url;
-
 	} catch (err) {
 		console.error("👍 returnCleanGithubIO() err =", err);
 	}
@@ -146,14 +174,16 @@ function returnCleanGithubCOM(loc) {
 		// console.log(loc);
 
 		// clean loc
-		var cleanLoc = loc.replace('https://', '');
+		var cleanLoc = loc.replace("https://", "");
 		if (!cleanLoc) return;
-		if (DEBUG) console.log("👍 returnCleanGithubCOM() cleanLoc =", cleanLoc);
+		if (DEBUG)
+			console.log("👍 returnCleanGithubCOM() cleanLoc =", cleanLoc);
 
 		// username
 		var username = cleanLoc.split(".github.io/")[0];
 		if (!username) return;
-		if (DEBUG) console.log("👍 returnCleanGithubCOM() username =", username);
+		if (DEBUG)
+			console.log("👍 returnCleanGithubCOM() username =", username);
 
 		// repo name
 		var repo = cleanLoc.split("/")[1];
@@ -163,7 +193,8 @@ function returnCleanGithubCOM(loc) {
 		// filepath
 		var filepath = cleanLoc.split(repo)[1];
 		if (!filepath) return;
-		if (DEBUG) console.log("👍 returnCleanGithubCOM() filepath =", filepath);
+		if (DEBUG)
+			console.log("👍 returnCleanGithubCOM() filepath =", filepath);
 
 		// final url
 		var url = "https://github.com/" + username + "/" + repo;
@@ -179,9 +210,6 @@ function returnCleanGithubCOM(loc) {
 		console.error("👍 returnCleanGithubCOM() err =", err);
 	}
 }
-
-
-
 
 /**
  *	Add a button to test

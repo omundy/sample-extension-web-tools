@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <style>
+        body {
+            font: 16px/22px Arial, sans-serif;
+        }
+
+        .container {
+            width: 1200px;
+            margin: 0 auto;
+        }
+
+        pre {
+            background-color: aliceblue;
+            padding: 1rem;
+        }
+
+        .my {
+            margin: 1rem 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+
+        <div class="my">chrome.storage =
+            <pre>
+                <code id="test">no value found</code>
+            </pre>
+        </div>
+
+        <form>
+
+            <div class="my">
+                <label for="showBreakpoints">Show breakpoints on Bootstrap websites</label>
+                <input type="checkbox" id="showBreakpoints" name="showBreakpoints" />
+                <!-- <input type="text" id="showBreakpoints" name="showBreakpoints" /> -->
+            </div>
+
+            <button type="submit">Save</button>
+        </form>
+
+        <div class="my" id="status"></div>
+
+    </div>
+
+    <script src="./options.js"></script>
+</body>
+</html>
