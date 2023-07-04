@@ -6,9 +6,10 @@
 let DEBUG = true;
 let breakpoints = true;
 
-(async () => {
+async function main() {
+	console.log("Running 👍 Web Tools");
 	// these only run on their respective sites
-
+	pageUsesBootstrap();
 	const data = await chrome.storage.sync.get("showBreakpoints", (res) => {
 		console.log(res);
 		breakpoints = res.showBreakpoints || false;
@@ -18,13 +19,34 @@ let breakpoints = true;
 	moodleHelper();
 
 	githubHelper();
-})();
+}
+if (document.readyState !== "loading") {
+	main();
+} else {
+	document.addEventListener("DOMContentLoaded", main);
+}
+
+function pageUsesBootstrap() {
+	let scripts = document.querySelectorAll("script");
+	// console.log(scripts);
+	for (let i = 0; i < scripts.length; i++) {
+		var src = scripts[i].src;
+		// console.log(src);
+		if (typeof src !== "undefined") {
+			if (src.toLowerCase().lastIndexOf("bootstrap.") !== -1) {
+				return true;
+				break;
+			}
+		}
+	}
+	return false;
+}
 
 /**
  *	Bootstrap Helper - Mainly breakpoints
  */
 function bootstrapHelper() {
-	if (!breakpoints) return;
+	if (!breakpoints || !pageUsesBootstrap()) return;
 	// also used here https://codepen.io/owenmundy/pen/oNLZpWM?editors=1100
 	let breakpoint = `
     <div style="position: fixed; top: 0; right: 0; font-size: .9rem;">
