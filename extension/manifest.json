@@ -1,6 +1,6 @@
 {
     "manifest_version": 3,
-    "name": "👍 Web Tools - Sample browser extension",
+    "name": "👍 Web Tools - sample browser extension",
     "short_name": "👍 Web Tools",
     "description": "Add features to your web browser for accessing github.io links, responsive design, etc.",
     "version": "0.1",

@@ -1,4 +1,4 @@
-# Sample Extension - 👍 Web Tools
+# 👍 Web Tools - sample browser extension
 
 ## Features
 
