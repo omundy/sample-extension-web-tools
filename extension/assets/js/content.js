@@ -7,11 +7,11 @@ let DEBUG = true;
 let breakpoints = true;
 
 async function main() {
-	console.log("Running 👍 Web Tools");
+	// console.log("Running 👍 Web Tools");
 	// these only run on their respective sites
 	pageUsesBootstrap();
 	const data = await chrome.storage.sync.get("showBreakpoints", (res) => {
-		console.log(res);
+		// console.log(res);
 		breakpoints = res.showBreakpoints || false;
 		bootstrapHelper();
 	});
