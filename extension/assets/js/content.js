@@ -6,6 +6,10 @@
 let DEBUG = true;
 let breakpoints = true;
 
+
+
+
+
 async function main() {
 	// console.log("Running 👍 Web Tools");
 	// these only run on their respective sites
@@ -26,6 +30,9 @@ if (document.readyState !== "loading") {
 	document.addEventListener("DOMContentLoaded", main);
 }
 
+/**
+ *  Does the page use Bootstrap framework?
+ */
 function pageUsesBootstrap() {
 	let scripts = document.querySelectorAll("script");
 	// console.log(scripts);
@@ -43,7 +50,7 @@ function pageUsesBootstrap() {
 }
 
 /**
- *	Bootstrap Helper - Mainly breakpoints
+ *	Add Bootstrap Helper - Mainly breakpoints
  */
 function bootstrapHelper() {
 	if (!breakpoints || !pageUsesBootstrap()) return;
