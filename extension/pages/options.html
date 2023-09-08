@@ -17,7 +17,7 @@
             padding: 1rem;
         }
 
-        .my {
+        .sectionMargin {
             margin: 1rem 0;
         }
     </style>
@@ -26,7 +26,7 @@
 <body>
     <div class="container">
 
-        <div class="my">chrome.storage =
+        <div class="sectionMargin">chrome.storage =
             <pre>
                 <code id="test">no value found</code>
             </pre>
@@ -34,19 +34,29 @@
 
         <form>
 
-            <div class="my">
-                <label for="showBreakpoints">Show breakpoints on Bootstrap websites</label>
-                <input type="checkbox" id="showBreakpoints" name="showBreakpoints" />
-                <!-- <input type="text" id="showBreakpoints" name="showBreakpoints" /> -->
+            <div class="sectionMargin">
+                <label for="bindGithubKeys">Bind github keys</label>
+                <input type="checkbox" id="bindGithubKeys" name="bindGithubKeys" />
             </div>
 
+            <div class="sectionMargin">
+                <label for="showBreakpoints">Show breakpoints on Bootstrap websites</label>
+                <input type="checkbox" id="showBreakpoints" name="showBreakpoints" />
+            </div>
+
+            <div class="sectionMargin">
+                <label for="setMoodleThings">Set Moodle Things</label>
+                <input type="checkbox" id="setMoodleThings" name="setMoodleThings" />
+            </div>
+            
             <button type="submit">Save</button>
         </form>
 
-        <div class="my" id="status"></div>
+        <div class="sectionMargin" id="status"></div>
 
     </div>
 
+    <script src="../assets/js/functions.js"></script>
     <script src="./options.js"></script>
 </body>
 </html>

@@ -4,25 +4,25 @@
 
 // turn on debugging
 let DEBUG = true;
-let breakpoints = true;
 
-
-
-
-
-async function main() {
+function main() {
 	// console.log("Running 👍 Web Tools");
-	// these only run on their respective sites
-	pageUsesBootstrap();
-	const data = await chrome.storage.sync.get("showBreakpoints", (res) => {
-		// console.log(res);
-		breakpoints = res.showBreakpoints || false;
-		bootstrapHelper();
+	chrome.storage.sync.get("storedOptions", (res) => {
+		let storedOptions = res.storedOptions;
+		if (DEBUG) console.log(storedOptions);
+
+		if (storedOptions.bindGithubKeys && Functions.stringInUrl("github")) {
+			bindGithubHelper();
+		}
+
+		if (storedOptions.showBreakpoints && Functions.bootstrapPage()) {
+			displayBootstrapBreakpoints();
+		}
+
+		if (storedOptions.setMoodleThings && Functions.stringInUrl("moodle")) {
+			moodleHelper();
+		}
 	});
-
-	moodleHelper();
-
-	githubHelper();
 }
 if (document.readyState !== "loading") {
 	main();
@@ -31,29 +31,10 @@ if (document.readyState !== "loading") {
 }
 
 /**
- *  Does the page use Bootstrap framework?
- */
-function pageUsesBootstrap() {
-	let scripts = document.querySelectorAll("script");
-	// console.log(scripts);
-	for (let i = 0; i < scripts.length; i++) {
-		var src = scripts[i].src;
-		// console.log(src);
-		if (typeof src !== "undefined") {
-			if (src.toLowerCase().lastIndexOf("bootstrap.") !== -1) {
-				return true;
-				break;
-			}
-		}
-	}
-	return false;
-}
-
-/**
  *	Add Bootstrap Helper - Mainly breakpoints
  */
-function bootstrapHelper() {
-	if (!breakpoints || !pageUsesBootstrap()) return;
+function displayBootstrapBreakpoints(breakpoints) {
+	console.log("👍 Adding Bootstrap breakpoints");
 	// also used here https://codepen.io/owenmundy/pen/oNLZpWM?editors=1100
 	let breakpoint = `
     <div style="position: fixed; top: 0; right: 0; font-size: .9rem;">
@@ -69,47 +50,51 @@ function bootstrapHelper() {
     </code>
     </div>`;
 	document.body.insertAdjacentHTML("beforeend", breakpoint);
+	console.log("👍 Adding Bootstrap breakpoints ✅");
 }
 
 /**
  *	Moodle Helper - Updates annoying Moodle settings
  */
 function moodleHelper() {
-	// only on moodle...
-	if (!window.location.href.includes("moodle")) return;
+	console.log("👍 Running Moodle helper");
 
-	// "notify student" checkbox and select
-	setFieldState("checkbox", "#id_sendstudentnotifications", false);
-	setFieldState("select-one", "#id_sendstudentnotifications", "0");
-	// uncheck dates on assignments
-	setFieldState("checkbox", "#id_allowsubmissionsfromdate_enabled", false);
-	setFieldState("checkbox", "#id_duedate_enabled", false);
-	setFieldState("checkbox", "#id_cutoffdate_enabled", false);
-	setFieldState("checkbox", "#id_gradingduedate_enabled", false);
-
-	// check "online text" submission
-	setFieldState("checkbox", "#id_assignsubmission_onlinetext_enabled", true);
-
-	console.log("👍 Moodle Helper done");
-}
-
-function setFieldState(type, id, state) {
-	let field = document.querySelector(id);
-	if (!field) return;
-	// console.log(field);
-	// console.log("field.type =", field.type);
-	// console.log("field.checked =", field.checked);
-	// console.log("field.value =", field.value);
-	if (field && field.type == "checkbox") {
-		// console.log("checkbox", field.type, field, field.checked);
-		field.checked = state;
-	} else if (field && field.type == "select-one") {
-		// console.log("select", field.type, field, field.value);
-		field.value = state;
+	if (Functions.moodleGraderPage()) {
+		// "notify student" checkbox and select
+		Functions.setFormField(
+			"checkbox",
+			'input[name="sendstudentnotifications"]',
+			false
+		);
 	}
+	if (Functions.moodleSettingsPage()) {
+		Functions.setFormField(
+			"select-one",
+			"#id_sendstudentnotifications",
+			"0"
+		);
+
+		// uncheck dates on assignments
+		Functions.setFormField(
+			"checkbox",
+			"#id_allowsubmissionsfromdate_enabled",
+			false
+		);
+		Functions.setFormField("checkbox", "#id_duedate_enabled", false);
+		Functions.setFormField("checkbox", "#id_cutoffdate_enabled", false);
+		Functions.setFormField("checkbox", "#id_gradingduedate_enabled", false);
+
+		// check "online text" submission
+		Functions.setFormField(
+			"checkbox",
+			"#id_assignsubmission_onlinetext_enabled",
+			true
+		);
+	}
+	console.log("👍 Moodle helper ✅");
 }
 
-function githubHelper() {
+function bindGithubHelper() {
 	Mousetrap.bind("ctrl+g", launchGithub);
 }
 
@@ -122,9 +107,9 @@ function launchGithub() {
 
 		var url;
 
-		if (window.location.href.includes("github.com")) {
+		if (Functions.stringInUrl("github.com")) {
 			url = returnCleanGithubIO(window.location.href);
-		} else if (window.location.href.includes("github.io")) {
+		} else if (Functions.stringInUrl("github.io")) {
 			url = returnCleanGithubCOM(window.location.href);
 		}
 		if (!url) return;
