@@ -1,3 +1,13 @@
+
+
+@media print
+{    
+    .no-print, .no-print *
+    {
+        display: none !important;
+    }
+}
+
 /* a button at bottom right of the page */
 .githubToolsButtonOnPage {
 	z-index: 99999999999;

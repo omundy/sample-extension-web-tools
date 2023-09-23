@@ -37,7 +37,7 @@ function displayBootstrapBreakpoints(breakpoints) {
 	console.log("👍 Adding Bootstrap breakpoints");
 	// also used here https://codepen.io/owenmundy/pen/oNLZpWM?editors=1100
 	let breakpoint = `
-    <div style="position: fixed; top: 0; right: 0; font-size: .9rem;">
+    <div class="no-print" style="position: fixed; top: 0; right: 0; font-size: .9rem;">
     <code style="background-color: #eee; display: inline-block; padding: 0px 2px; border-radius: 4px; color: #577590ff;">
         <a href="https://getbootstrap.com/docs/5.3/layout/breakpoints/" target="_blank">Breakpoint</a>:
         <span class="d-none">Always hidden</span>
