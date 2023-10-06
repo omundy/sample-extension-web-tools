@@ -3,7 +3,7 @@
  */
 
 // turn on debugging
-let DEBUG = true;
+let DEBUG = false;
 
 function main() {
 	// console.log("Running 👍 Web Tools");

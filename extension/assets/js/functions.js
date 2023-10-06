@@ -4,7 +4,7 @@
  ******************************************************************************/
 
 var Functions = (function () {
-	let DEBUG = true;
+	let DEBUG = false;
 
 	function stringInUrl(str) {
 		let result = window.location.href.includes(str);
