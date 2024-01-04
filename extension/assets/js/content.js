@@ -15,19 +15,57 @@ function main() {
 			bindGithubHelper();
 		}
 
-		if (storedOptions.showBreakpoints && Functions.bootstrapPage()) {
+		if (Functions.bootstrapPage() && storedOptions.showBreakpoints) {
 			displayBootstrapBreakpoints();
 		}
 
 		if (storedOptions.setMoodleThings && Functions.stringInUrl("moodle")) {
 			moodleHelper();
 		}
+
+		setBadgeText();
 	});
 }
 if (document.readyState !== "loading") {
 	main();
 } else {
 	document.addEventListener("DOMContentLoaded", main);
+}
+
+let callResize;
+window.addEventListener("resize", (event) => {
+	// clearTimeout(callResize);
+	// callResize = setTimeout(setBadgeText, 100);
+
+	setBadgeText();
+	// console.log(event);
+});
+
+function getBootstrapBreakpoint() {
+	let w = window.innerWidth;
+	let b = "XS";
+	if (w >= 576) b = "SM";
+	if (w >= 768) b = "MD";
+	if (w >= 992) b = "LG";
+	if (w >= 1200) b = "XL";
+	if (w >= 1400) b = "XXL";
+	return b;
+}
+
+function setBadgeText() {
+	try {
+		chrome.runtime.sendMessage(
+			{
+				action: "setBadgeText",
+				data: getBootstrapBreakpoint(),
+			},
+			function (response) {
+				// console.log(response);
+			}
+		);
+	} catch (err) {
+		console.error(err);
+	}
 }
 
 /**

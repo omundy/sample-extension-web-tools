@@ -11,7 +11,8 @@ var Functions = (function () {
 		if (DEBUG) console.log(`stringInUrl(${str})`, result);
 		return result;
 	}
-	function bootstrapPage() {
+    function bootstrapPage() {
+        // if using a compiler this won't work
 		let result = Functions.elementContains("script", "src", "bootstrap.");
 		if (DEBUG) console.log("bootstrapPage()", result);
 		return result;
