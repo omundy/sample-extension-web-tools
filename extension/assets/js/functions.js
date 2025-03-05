@@ -11,8 +11,8 @@ var Functions = (function () {
 		if (DEBUG) console.log(`stringInUrl(${str})`, result);
 		return result;
 	}
-    function bootstrapPage() {
-        // if using a compiler this won't work
+	function bootstrapPage() {
+		// if using a compiler this won't work
 		let result = Functions.elementContains("script", "src", "bootstrap.");
 		if (DEBUG) console.log("bootstrapPage()", result);
 		return result;
@@ -29,6 +29,17 @@ var Functions = (function () {
 		let grader = window.location.href.includes("grader");
 		if (DEBUG) console.log("moodleSettingsPage()", grader);
 		return moodle && grader;
+	}
+
+	/**
+	 * Utility function to add CSS in multiple passes.
+	 * https://stackoverflow.com/a/15506705/441878
+	 * @param {string} styleString
+	 */
+	function addStyle(styleString) {
+		const style = document.createElement("style");
+		style.textContent = styleString;
+		document.head.append(style);
 	}
 
 	function elementContains(ele, attr, str) {
@@ -61,24 +72,11 @@ var Functions = (function () {
 		// console.log("field.checked =", field.checked);
 		// console.log("field.value =", field.value);
 		if (field && field.type == "checkbox") {
-			if (DEBUG)
-				console.log(
-					"setFormField()",
-					"checkbox",
-					field.type,
-					field,
-					field.checked
-				);
+			if (DEBUG) console.log("setFormField()", "checkbox", field, field.checked);
 			field.checked = state;
 		} else if (field && field.type == "select-one") {
 			if (DEBUG)
-				console.log(
-					"setFormField()",
-					"select",
-					field.type,
-					field,
-					field.value
-				);
+				console.log("setFormField()", "select", field, field.value);
 			field.value = state;
 		}
 	}

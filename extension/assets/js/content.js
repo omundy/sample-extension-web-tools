@@ -3,7 +3,7 @@
  */
 
 // turn on debugging
-let DEBUG = false;
+let DEBUG = true;
 
 function main() {
 	// console.log("Running 👍 Web Tools");
@@ -12,7 +12,8 @@ function main() {
 		if (DEBUG) console.log(storedOptions);
 
 		if (storedOptions.bindGithubKeys && Functions.stringInUrl("github")) {
-			bindGithubHelper();
+			// bind github helper
+			Mousetrap.bind("ctrl+g", FS_Github.launchGithub);
 		}
 
 		if (Functions.bootstrapPage() && storedOptions.showBreakpoints) {
@@ -21,6 +22,7 @@ function main() {
 
 		if (storedOptions.setMoodleThings && Functions.stringInUrl("moodle")) {
 			moodleHelper();
+			moodleStartStayLoggedInPingInterval();
 		}
 
 		setBadgeText();
@@ -106,18 +108,10 @@ function moodleHelper() {
 		);
 	}
 	if (Functions.moodleSettingsPage()) {
-		Functions.setFormField(
-			"select-one",
-			"#id_sendstudentnotifications",
-			"0"
-		);
+		Functions.setFormField("select-one", "#id_sendstudentnotifications", "0");
 
 		// uncheck dates on assignments
-		Functions.setFormField(
-			"checkbox",
-			"#id_allowsubmissionsfromdate_enabled",
-			false
-		);
+		Functions.setFormField("checkbox", "#id_allowsubmissionsfromdate_enabled", false);
 		Functions.setFormField("checkbox", "#id_duedate_enabled", false);
 		Functions.setFormField("checkbox", "#id_cutoffdate_enabled", false);
 		Functions.setFormField("checkbox", "#id_gradingduedate_enabled", false);
@@ -129,139 +123,21 @@ function moodleHelper() {
 			true
 		);
 	}
-	console.log("👍 Moodle helper ✅");
+	// console.log("👍 Moodle helper ✅");
 }
 
-function bindGithubHelper() {
-	Mousetrap.bind("ctrl+g", launchGithub);
+// ping the Moodle server to keep the session alive (on the server).
+let courseUrl = "https://moodle.davidson.edu/course/view.php?id=18258"; // DIG211 2025
+function moodleStartStayLoggedInPingInterval() {
+	setInterval(async function () {
+		await fetch(courseUrl)
+			.then((res) => {
+				console.log("👍", "PING", res.status, new Date().toLocaleString(), res.headers)
+			})
+			.catch((err) => console.error("👍", err));
+	}, 10 * 60 * 1000); // 10 min
 }
 
-/**
- *	Launch a Github.com or Github.io page
- */
-function launchGithub() {
-	try {
-		console.log("launchGithub()");
-
-		var url;
-
-		if (Functions.stringInUrl("github.com")) {
-			url = returnCleanGithubIO(window.location.href);
-		} else if (Functions.stringInUrl("github.io")) {
-			url = returnCleanGithubCOM(window.location.href);
-		}
-		if (!url) return;
-
-		// open if url returned
-		var html = window.open(url, "this page on github.io / github.com");
-	} catch (err) {
-		console.error(err);
-	}
-}
-
-/**
- *	Return a URL converted from github.com > github.io
- */
-function returnCleanGithubIO(loc) {
-	try {
-		console.log("👍 returnCleanGithubIO() loc =", loc);
-
-		// tests
-		// loc = "https://github.com/omundy/dig245-critical-web-design/blob/master/demos/javascript/0-hello-console-variables/0-lamp.html";
-
-		if (!loc) return;
-		// console.log(loc);
-
-		// clean loc
-		var cleanLoc = loc.replace("https://github.com/", "");
-		if (!cleanLoc) return;
-		if (DEBUG) console.log("👍 returnCleanGithubIO() cleanLoc =", cleanLoc);
-
-		// username
-		var username = cleanLoc.split("/")[0];
-		if (!username) return;
-		if (DEBUG) console.log("👍 returnCleanGithubIO() username =", username);
-
-		// repo name
-		var repo = cleanLoc.split("/")[1];
-		if (!repo) return;
-		if (DEBUG) console.log("👍 returnCleanGithubIO() repo =", repo);
-
-		// filepath
-		var filepath = cleanLoc
-			.split("/blob/master")
-			.join("^")
-			.split("/blob/main")
-			.join("^")
-			.split("^")[1];
-		if (!filepath) {
-			// if we get this far we know we're on Github.com, but in a repo directory
-			filepath = "/index.html";
-		}
-		if (DEBUG) console.log("👍 returnCleanGithubIO() filepath =", filepath);
-
-		// final url
-		var url = "https://" + username + ".github.io/" + repo + filepath;
-		if (!url) return;
-		if (DEBUG) console.log("👍 returnCleanGithubIO() url =", url);
-
-		return url;
-	} catch (err) {
-		console.error("👍 returnCleanGithubIO() err =", err);
-	}
-}
-
-/**
- *	Return a URL converted from github.io > github.com
- */
-function returnCleanGithubCOM(loc) {
-	try {
-		console.log("👍 returnCleanGithubCOM() loc =", loc);
-
-		// tests
-		// loc = "https://omundy.github.io/dig245-critical-web-design/";
-		// loc = "https://omundy.github.io/dig245-critical-web-design/demos/javascript/0-hello-console-variables/0-lamp.html";
-
-		if (!loc) return;
-		// console.log(loc);
-
-		// clean loc
-		var cleanLoc = loc.replace("https://", "");
-		if (!cleanLoc) return;
-		if (DEBUG)
-			console.log("👍 returnCleanGithubCOM() cleanLoc =", cleanLoc);
-
-		// username
-		var username = cleanLoc.split(".github.io/")[0];
-		if (!username) return;
-		if (DEBUG)
-			console.log("👍 returnCleanGithubCOM() username =", username);
-
-		// repo name
-		var repo = cleanLoc.split("/")[1];
-		if (!repo) return;
-		if (DEBUG) console.log("👍 returnCleanGithubCOM() repo =", repo);
-
-		// filepath
-		var filepath = cleanLoc.split(repo)[1];
-		if (!filepath) return;
-		if (DEBUG)
-			console.log("👍 returnCleanGithubCOM() filepath =", filepath);
-
-		// final url
-		var url = "https://github.com/" + username + "/" + repo;
-		// if not root
-		if (filepath != "" && filepath != "/" && filepath != "/index.html")
-			url += "/blob/master" + filepath;
-
-		if (!url) return;
-		if (DEBUG) console.log("👍 returnCleanGithubCOM() url =", url);
-
-		return url;
-	} catch (err) {
-		console.error("👍 returnCleanGithubCOM() err =", err);
-	}
-}
 
 /**
  *	Add a button to test

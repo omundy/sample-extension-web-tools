@@ -32,6 +32,7 @@
             ],
             "js": [
                 "assets/libs/mousetrap.min.js",
+                "assets/js/fs-github.js",
                 "assets/js/functions.js",
                 "assets/js/content.js"
             ],
